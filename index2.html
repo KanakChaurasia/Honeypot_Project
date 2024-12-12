@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('rent.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Dosis', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+        }
+
+        .container h1 {
+            color: #6a0dad;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+
+        .container input {
+            width: 90%;
+            height: 40px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 1em;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container input:focus {
+            border-color: #6a0dad;
+            outline: none;
+        }
+
+        #clickButton {
+            background: linear-gradient(to right, #6a0dad, #ff007f);
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #clickButton:hover {
+            background: linear-gradient(to right, #ff007f, #6a0dad);
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .success {
+            color: green;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form id="form1" method="post" action="" onsubmit="return checkForm();">
+            <input type="text" name="username" id="name" placeholder="Enter Username..." autocomplete="off" required>
+            <input type="password" name="psw" id="pass" placeholder="Enter Password..." required>
+            <input type="submit" value="Login" id="clickButton">
+        </form>
+        <p id="message" class="error"></p>
+    </div>
+
+    <script>
+        let loginAttempts = 3;
+
+        function checkForm() {
+            const name = document.getElementById("name").value;
+            const pass = document.getElementById("pass").value;
+            
+            const storedData = {
+                username1: "storedUsername", // Replace with your data
+                password1: "storedPassword"  // Replace with your data
+            };
+
+            if (name === storedData.username1 && pass === storedData.password1) {
+                document.getElementById("message").className = "success";
+                document.getElementById("message").innerText = "Successfully Logged In!";
+                setTimeout(() => {
+                    window.open('https://vtop.vit.ac.in/vtop/initialProcess', '_blank');
+                }, 1000);
+                return false;
+            } else {
+                loginAttempts--;
+                if (loginAttempts > 0) {
+                    document.getElementById("message").className = "error";
+                    document.getElementById("message").innerText = `Incorrect login. ${loginAttempts} attempt(s) remaining.`;
+                } else {
+                    document.getElementById("message").className = "error";
+                    document.getElementById("message").innerText = "No login attempts remaining. Please try again later.";
+                    disableForm();
+                }
+                return false;
+            }
+        }
+
+        function disableForm() {
+            document.getElementById("name").disabled = true;
+            document.getElementById("pass").disabled = true;
+            document.getElementById("clickButton").disabled = true;
+        }
+    </script>
+</body>
+</html>
